@@ -33,3 +33,4 @@ If no seasonal offers are active, a default "Classic Collection" is displayed.
 - Integrate a payment gateway for seamless transactions.  
 - Enhance the UI with more animations and interactive elements.  
 
+![Screenshot 2025-03-26 233038](https://github.com/user-attachments/assets/edb0d923-083a-4f6b-a26a-7cf488b3e98b)
