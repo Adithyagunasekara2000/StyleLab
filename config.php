@@ -2,7 +2,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'StyleLab');
+define('DB_NAME', 'clothingShop');
 
 // Enhanced Database Connection Function
 function connectDatabase() {

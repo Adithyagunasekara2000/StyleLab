@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$db_name = "shopping";
+$db_name = "clothingshop";
 $connection = mysqli_connect("localhost", "root", "", $db_name);
 
 // Include cart functions

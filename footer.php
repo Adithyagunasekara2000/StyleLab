@@ -1,4 +1,5 @@
-<footer class="bg-gray-900 text-white py-16">
+<div style="background-color:black">
+<footer class="bg-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
             <div>
                 <h4 class="font-bold text-xl mb-4"> StyleLab</h4>
@@ -36,5 +37,6 @@
             <p class="text-gray-400">&copy; 2024 StyleLab Clothing. All Rights Reserved.</p>
         </div>
     </footer>
+</div>
 </body>
 </html>
