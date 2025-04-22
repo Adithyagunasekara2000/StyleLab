@@ -85,12 +85,24 @@ require_once 'cart_function.php'; // Ensure this is included
 
                     
                     <div class="flex justify-between items-center px-4 pt-2">
-                        <a href="login.php" class="flex items-center text-gray-300 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                            Account
-                        </a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+    <!-- If user is logged in, show logout -->
+    <a href="logout.php" class="text-gray-300 hover:text-white flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+        </svg>
+        Logout
+    </a>
+<?php else: ?>
+    <!-- If not logged in, show login -->
+    <a href="login.php" class="text-gray-300 hover:text-white flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        Login
+    </a>
+<?php endif; ?>
+
                     </div>
                 </div>
             </div>

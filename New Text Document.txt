@@ -1,0 +1,18 @@
+
+INSERT INTO users (
+    name,
+    email,
+    password,
+    role,
+    verification_token,
+    is_verified,
+    created_at
+) VALUES (
+    'Dilusha ',
+    'admin@dilusha.com',
+    '$2y$10$4b03ny/DX2Olyzf06S.AceYZxc0LJudlT/QrcshGAndUcSoeprEGS',
+    'admin',
+    '',
+    1,
+    NOW()
+);
