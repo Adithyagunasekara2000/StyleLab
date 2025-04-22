@@ -8,7 +8,7 @@ $error_message = "";
 if (isset($_SESSION['user_id'])) {
     // Redirect admins to dashboard, customers to home page
     if ($_SESSION['user_role'] === 'admin') {
-        header("Location: Admindashboard.php");
+        header("Location: Admin/AdminDashboard.php");
     } else {
         header("Location: index.php");
     }
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
                 // Redirect based on role
                 if ($user['role'] === 'admin') {
-                    header("Location: Admindashboard.php");
+                    header("Location: Admin/AdminDashboard.php");
                 } else {
                     header("Location: index.php");
                 }
