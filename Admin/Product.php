@@ -51,61 +51,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $productId);
         
         if ($stmt->execute()) {
-            $successMessage = "Product added successfully.";
+            $successMessage = "Product deleted successfully.";
         } else {
-            $errorMessage = "Error adding product: " . $conn->error;
+            $errorMessage = "Error deleting product: " . $conn->error;
             error_log("SQL Error: " . $conn->error);
         }
     }
     
     // Handle product addition
-  // Handle product addition
-elseif (isset($_POST['add_product'])) {
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-    $category = $_POST['category'];
-    $stock_quantity = $_POST['stock_quantity'];
-    $available_sizes = isset($_POST['sizes']) ? json_encode($_POST['sizes']) : json_encode([]);
-    
-    // Upload main product image
-    $mainImage = '';
-    if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] == 0) {
-        $mainImage = uploadImage($_FILES['main_image']);
-        if ($mainImage === false) {
-            $uploadError = error_get_last();
-            $errorMessage = "Error uploading main image. Check file type and size. ";
-            if ($uploadError) {
-                $errorMessage .= "System error: " . $uploadError['message'];
-            }
-            error_log("Image upload failed: " . print_r($_FILES['main_image'], true));
-        }
-    } else {
-        $errorCode = isset($_FILES['main_image']['error']) ? $_FILES['main_image']['error'] : 'unknown';
-        $errorMessage = "Main product image upload failed. Error code: " . $errorCode;
-        error_log("Image upload error code: " . $errorCode);
-    }
-        // Upload gallery images
-        $gallery = [];
-        if (isset($_FILES['gallery_images'])) {
-            $fileCount = count($_FILES['gallery_images']['name']);
-            
-            for ($i = 0; $i < $fileCount; $i++) {
-                if ($_FILES['gallery_images']['error'][$i] == 0) {
-                    $file = [
-                        'name' => $_FILES['gallery_images']['name'][$i],
-                        'type' => $_FILES['gallery_images']['type'][$i],
-                        'tmp_name' => $_FILES['gallery_images']['tmp_name'][$i],
-                        'error' => $_FILES['gallery_images']['error'][$i],
-                        'size' => $_FILES['gallery_images']['size'][$i]
-                    ];
-                    
-                    $galleryImage = uploadImage($file);
-                    if ($galleryImage !== false) {
-                        $gallery[] = $galleryImage;
-                    }
+    elseif (isset($_POST['add_product'])) {
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+        $category = $_POST['category'];
+        $stock_quantity = $_POST['stock_quantity'];
+        $available_sizes = isset($_POST['sizes']) ? json_encode($_POST['sizes']) : json_encode([]);
+        
+        // Upload main product image
+        $mainImage = '';
+        if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] == 0) {
+            $mainImage = uploadSingleImage($_FILES['main_image']);
+            if ($mainImage === false) {
+                $uploadError = error_get_last();
+                $errorMessage = "Error uploading main image. Check file type and size. ";
+                if ($uploadError) {
+                    $errorMessage .= "System error: " . $uploadError['message'];
                 }
+                error_log("Image upload failed: " . print_r($_FILES['main_image'], true));
             }
+        } else {
+            $errorCode = isset($_FILES['main_image']['error']) ? $_FILES['main_image']['error'] : 'unknown';
+            $errorMessage = "Main product image upload failed. Error code: " . $errorCode;
+            error_log("Image upload error code: " . $errorCode);
+        }
+        
+        // Upload gallery images - FIXED SECTION
+        $gallery = [];
+        if (isset($_FILES['gallery_images']) && !empty($_FILES['gallery_images']['name'][0])) {
+            $gallery = uploadMultipleImages($_FILES['gallery_images']);
         }
         
         $galleryJson = json_encode($gallery);
@@ -126,9 +109,8 @@ elseif (isset($_POST['add_product'])) {
     $conn->close();
 }
 
-// Function to handle image upload
-// Function to handle image upload
-function uploadImage($file) {
+// Function to handle single image upload
+function uploadSingleImage($file) {
     $targetDir = "../uploads/";
     
     // Create directory if it doesn't exist
@@ -175,6 +157,58 @@ function uploadImage($file) {
     
     return $fileName;
 }
+
+// NEW FUNCTION: Function to handle multiple image uploads
+function uploadMultipleImages($files) {
+    $uploadedFiles = [];
+    $fileCount = count($files['name']);
+    
+    for ($i = 0; $i < $fileCount; $i++) {
+        // Skip if there was an error or no file was uploaded
+        if ($files['error'][$i] !== 0 || empty($files['name'][$i])) {
+            continue;
+        }
+        
+        $targetDir = "../uploads/";
+        
+        // Create directory if it doesn't exist
+        if (!file_exists($targetDir)) {
+            if (!mkdir($targetDir, 0777, true)) {
+                error_log("Failed to create directory: " . $targetDir);
+                continue;
+            }
+        }
+        
+        // Generate unique filename
+        $fileName = uniqid() . "_" . basename($files['name'][$i]);
+        $targetFilePath = $targetDir . $fileName;
+        
+        // Check file type
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        if (!in_array($files['type'][$i], $allowedTypes)) {
+            error_log("Invalid file type: " . $files['type'][$i]);
+            continue;
+        }
+        
+        // Check file size (max 5MB)
+        if ($files['size'][$i] > 5000000) {
+            error_log("File too large: " . $files['size'][$i] . " bytes");
+            continue;
+        }
+        
+        // Debug info
+        error_log("Attempting to upload gallery file: " . $files['name'][$i] . " to " . $targetFilePath);
+        
+        if (move_uploaded_file($files['tmp_name'][$i], $targetFilePath)) {
+            $uploadedFiles[] = $fileName;
+        } else {
+            error_log("Failed to move uploaded gallery file: " . $files['name'][$i]);
+        }
+    }
+    
+    return $uploadedFiles;
+}
+
 function copyImagesToUploads() {
     // Define source and destination directories
     $sourceDir = '../images_men/';
@@ -205,8 +239,6 @@ function copyImagesToUploads() {
     
     echo "Images copied to uploads directory successfully!";
 }
-
-
 
 // Fetch all products
 $conn = connectDatabase();
@@ -379,7 +411,9 @@ $conn->close();
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex-shrink-0 h-16 w-16">
-                                                <img class="h-30 w-30 object-cover" src="../uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">                                            </td>
+                                                <img class="h-30 w-30 object-cover" src="../uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">                                           
+                                                </div>
+                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($product['name']); ?></div>
                                             </td>
@@ -471,7 +505,7 @@ $conn->close();
                             </div>
                             
                             <div>
-                                <label for="gallery_images" class="block text-sm font-medium text-gray-700 mb-1">Gallery Images</label>
+                            <label for="gallery_images" class="block text-sm font-medium text-gray-700 mb-1">Gallery Images</label>
                                 <input type="file" id="gallery_images" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" multiple class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none">
                                 <p class="mt-1 text-xs text-gray-500">Upload up to 4 additional images. Max 5MB each.</p>
                             </div>
