@@ -1,4 +1,31 @@
 
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL,
+  verification_token VARCHAR(255) NOT NULL,
+  is_verified TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    category VARCHAR(50) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    gallery TEXT,
+    stock_quantity INT NOT NULL DEFAULT 0,
+    available_sizes TEXT,
+    featured BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
 INSERT INTO users (
     name,
     email,

@@ -111,6 +111,8 @@ require_once 'cart_function.php'; // Ensure this is included
             <div class="hidden md:flex items-center space-x-4">
                 <a href="Men.php" class="text-gray-300 hover:text-white font-semibold">Men</a>
                 <a href="Women.php" class="text-gray-300 hover:text-white font-semibold">Women</a>
+                <a href="index.php" class="text-gray-300 hover:text-white font-semibold">Home</a>
+
              <form action="search.php" method="GET" class="flex items-center">
                     <input type="text" name="query" placeholder="Search" class="border rounded-md px-3 py-2 w-48 text-black">
                     <button type="submit" class="ml-2 text-white">

@@ -1,7 +1,7 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
 
 // Initialize shopping cart if not exists
 if (!isset($_SESSION["shopping_cart"])) {

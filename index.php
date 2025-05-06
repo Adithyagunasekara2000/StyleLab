@@ -1,5 +1,5 @@
 <?php include 'header.php'; 
-// Sample featured products - replace with actual data from your database
+
 $featuredProducts = [
     [
         'name' => 'WHITE/NAVY T', 
