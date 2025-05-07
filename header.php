@@ -1,7 +1,14 @@
 <?php 
-session_start(); 
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); 
+}
+
+// Include necessary files
 require_once 'config.php'; 
-require_once 'cart_function.php'; // Ensure this is included
+if (!function_exists('addToCart')) {
+    require_once 'cart_functions.php';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +65,6 @@ require_once 'cart_function.php'; // Ensure this is included
                     <img src="images_home/ch2.png" alt="masixSL" class="h-8 sm:h-10 w-auto object-contain">
                 </a>
             </div>
-            
            
 
             <!-- Mobile Menu Button (hidden on larger screens) -->
@@ -128,7 +134,6 @@ require_once 'cart_function.php'; // Ensure this is included
                 </a>
             </div>
 
-            <!-- Shopping Cart (visible on all screen sizes) -->
            <!-- Shopping Cart (visible on all screen sizes) -->
 <div class="relative" x-data="{ cartOpen: false }">
     <button 
@@ -205,7 +210,7 @@ require_once 'cart_function.php'; // Ensure this is included
                         <span>Total:</span>
                         <span>$<?php echo number_format($total, 2); ?></span>
                     </div>
-                    <a href="cart_function.php" class="mt-4 block w-full bg-black text-white py-2 text-center rounded-lg hover:bg-gray-800 transition">
+                    <a href="cart.php" class="mt-4 block w-full bg-black text-white py-2 text-center rounded-lg hover:bg-gray-800 transition">
                         Checkout
                     </a>
                 </div>
@@ -216,5 +221,3 @@ require_once 'cart_function.php'; // Ensure this is included
     </div>
 </div>
 </nav>
-</body>
-</html>

@@ -1,16 +1,17 @@
 <?php
-include 'header.php';
+// Start session at the very beginning
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Include cart functions
+include_once 'cart_functions.php';
+
+// Database connection
 $db_name = "clothingshop";
 $connection = mysqli_connect("localhost", "root", "", $db_name);
 
-// Include cart functions
-include_once 'cart_function.php';
-
-// Handle add to cart
+// Handle add to cart BEFORE any output
 if(isset($_POST["add"])){
     $newItem = [
         'collection' => 'men',
@@ -29,13 +30,16 @@ if(isset($_POST["add"])){
     exit();
 }
 
-// Handle remove from cart
+// Handle remove from cart BEFORE any output
 if (isset($_GET["action"]) && $_GET["action"] == "delete") {
     removeFromCart('men', $_GET["id"]);
     // Redirect to prevent pagination issues
     header("Location: Men.php");
     exit();
 }
+
+// NOW include the header (which outputs HTML)
+include 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
