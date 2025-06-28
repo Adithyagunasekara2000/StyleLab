@@ -159,7 +159,7 @@ $collections = [
         <?php endforeach; ?>
     </div>
     
-    <!-- Dot indicators for mobile (optional) -->
+   
     <div class="md:hidden flex justify-center my-2">
         <?php foreach($product['gallery'] as $dotIndex => $dot): ?>
         <button 
