@@ -2,7 +2,7 @@
 # Online Clothing Shop  - StyleLab
 
 ## Overview  
-This is an online clothing shop developed using PHP. The website allows users to browse various collections, including Men’s, Women’s, Kids’, and Bags. It also features seasonal offers based on major festivals and events.  
+This is an online clothing shop developed using PHP. The website allows users to browse various collections, including Men’s, Women’s clothes.
 
 ## Features  
 - **Home Page:** Displays featured collections and seasonal offers.  
@@ -16,16 +16,7 @@ This is an online clothing shop developed using PHP. The website allows users to
 3. Place the project folder in the `htdocs` directory (for XAMPP).  
 4. Start Apache and MySQL from your server control panel.  
 5. Open the project in a browser by navigating to `http://localhost/your_project_folder/`.  
-
-
-## Seasonal Offer Logic  
-The seasonal offers are determined by PHP functions that check the current date and display relevant collections. The logic includes:  
-- Sinhala & Tamil New Year: April 1 - April 15  
-- Vesak Festival: May 1 - May 31  
-- Deepavali: November 1 - November 30  
-- Christmas: December 1 - December 31  
-
-If no seasonal offers are active, a default "Classic Collection" is displayed.  
+ 
 
 ## Future Improvements  
 - Implement user authentication (Login & Register).  
