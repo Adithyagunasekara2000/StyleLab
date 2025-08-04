@@ -1,12 +1,10 @@
-
 # Online Clothing Shop  - StyleLab
 
 ## Overview  
 This is an online clothing shop developed using PHP. The website allows users to browse various collections, including Men’s, Women’s clothes.
 
 ## Features  
-- **Home Page:** Displays featured collections and seasonal offers.  
-- **Dynamic Seasonal Offers:** Special collections appear automatically based on the current date.  
+- **Home Page:** Displays featured collections and seasonal offers.   
 - **User-Friendly Navigation:** Responsive design with a smooth browsing experience.  
 - **Secure Data Handling:** Uses `htmlspecialchars()` to prevent XSS attacks.  
 
@@ -23,5 +21,9 @@ This is an online clothing shop developed using PHP. The website allows users to
 - Add a shopping cart and checkout functionality.  
 - Integrate a payment gateway for seamless transactions.  
 - Enhance the UI with more animations and interactive elements.  
+<img width="1900" height="841" alt="Screenshot 2025-08-04 183627" src="https://github.com/user-attachments/assets/f2553775-616d-4b06-804c-4a6c1cc48175" />
 
-![Screenshot 2025-03-26 233038](https://github.com/user-attachments/assets/edb0d923-083a-4f6b-a26a-7cf488b3e98b)
+<img width="1904" height="844" alt="Screenshot 2025-08-04 183708" src="https://github.com/user-attachments/assets/500de6a6-a1f3-4015-9490-558492afa010" />
+
+<img width="1904" height="845" alt="Screenshot 2025-08-04 190931" src="https://github.com/user-attachments/assets/be6b5910-5851-4ded-8bb4-cba2c9696587" />
+
